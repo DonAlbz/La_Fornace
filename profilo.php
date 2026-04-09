@@ -17,61 +17,10 @@
 
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-<link rel="stylesheet" href="profilo.css?v=1.1">
+<link rel="stylesheet" href="css/profilo.css?v=1.1">
 
-<style> /*
-body {
-    font-family: Arial;
-}
 
-/* Navbar */
-.profile-container {
-    width: 60px;
-    height: 60px;
-}
-/*
-#profil-image {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    overflow: hidden;
-    background: #eee;
-}
 
-#profil-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-/* Viewer *//*
-.viewer-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.9);
-    justify-content: center;
-    align-items: center;
-}
-
-.viewer-content {
-    text-align: center;
-    color: white;
-}
-
-#full-image {
-    max-width: 300px;
-    border-radius: 10px;
-}
-
-.viewer-actions button {
-    margin: 10px;
-    padding: 10px;
-    cursor: pointer;
-}*/
-</style>
 </head>
 
 <body>
@@ -79,10 +28,10 @@ body {
 <?php session_start(); $_SESSION['user_id'] = 1; ?>
 
 <nav>
-    <div class="profile-container">
-        <button id="profil-image" onclick="viewImage()">
+    <div class="contenuto-profilo">
+        <button id="image-profilo" onclick="viewImage()">
             <img id="display-img" style="display:none;">
-            <i id="user-icon" class="fa fa-user"></i>
+            <i id="icona-utente" class="fa fa-user"></i>
         </button>
     </div>
 </nav>
@@ -100,7 +49,7 @@ body {
 
         <div class="viewer-actions">
             <button onclick="fileInput.click()">Modifica</button>
-            <button onclick="removeImage()"class="fas fa-trash">Rimuovi</button>
+            <button onclick="rimuoviImage()"class="fas fa-trash">Rimuovi</button>
         </div>
     </div>
 </div>
@@ -110,7 +59,7 @@ const viewer = document.getElementById('image-viewer');
 const displayImg = document.getElementById('display-img');
 const fullImg = document.getElementById('full-image');
 const fullIcon = document.getElementById('full-icon');
-const userIcon = document.getElementById('user-icon');
+const userIcon = document.getElementById('icona-utente');
 const fileInput = document.getElementById('file-input');
 
 function viewImage() {
@@ -169,7 +118,7 @@ async function updateImage(event) {
     }
 }
 
-async function removeImage() {
+async function rimuoviImage() {
     if (!confirm("Rimuovere foto?")) return;
 
     await fetch('remove_foto.php', { method: 'POST' });
