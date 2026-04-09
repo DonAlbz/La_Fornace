@@ -1,9 +1,10 @@
+Create DATABASE SOCIAL;
 use social;
 
--- Tabella Utenti migliorata
+# Tabella Utenti 
 CREATE TABLE utenti (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(30) NOT NULL UNIQUE, -- Aggiunto username
+    username VARCHAR(30) NOT NULL UNIQUE, # Aggiunto username
     nome VARCHAR(50) NOT NULL,
     cognome VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
@@ -14,7 +15,7 @@ CREATE TABLE utenti (
     data_registrazione TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Tabella Post (rimane simile, aggiungiamo un check per contenuto vuoto)
+# Tabella Post
 CREATE TABLE post (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_utente INT NOT NULL,
@@ -23,7 +24,7 @@ CREATE TABLE post (
     FOREIGN KEY (id_utente) REFERENCES utenti(id) ON DELETE CASCADE
 );
 
--- Tabella Media (unificata per post e commenti per semplicità o divisa come avevi fatto)
+# Tabella Media 
 CREATE TABLE media_post (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_post INT NOT NULL,
@@ -32,32 +33,31 @@ CREATE TABLE media_post (
     FOREIGN KEY (id_post) REFERENCES post(id) ON DELETE CASCADE
 );
 
--- Tabella Amicizie con vincolo di unicità
+# Tabella Amicizie 
 CREATE TABLE amicizie (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_utente_mandante INT NOT NULL,
     id_utente_ricevente INT NOT NULL,
     stato ENUM('richiesta','accettata','rifiutata') DEFAULT 'richiesta',
     data_richiesta TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    UNIQUE (id_utente_mandante, id_utente_ricevente), -- Impedisce doppioni
+    UNIQUE (id_utente_mandante, id_utente_ricevente), # Impedisce doppioni
     FOREIGN KEY (id_utente_mandante) REFERENCES utenti(id) ON DELETE CASCADE,
     FOREIGN KEY (id_utente_ricevente) REFERENCES utenti(id) ON DELETE CASCADE
 );
 
--- NUOVA: Tabella Notifiche
+# Tabella Notifiche
 CREATE TABLE notifiche (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_utente_destinatario INT NOT NULL,
     id_utente_mittente INT NOT NULL,
     tipo ENUM('like', 'commento', 'amicizia') NOT NULL,
-    id_riferimento INT, -- ID del post o del commento correlato
+    id_riferimento INT, # ID del post o del commento correlato
     letto BOOLEAN DEFAULT FALSE,
     data_notifica TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_utente_destinatario) REFERENCES utenti(id) ON DELETE CASCADE
 );
 
-
-
+# Tabella Commenti
 CREATE TABLE commenti (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_post INT NOT NULL,
@@ -69,6 +69,7 @@ CREATE TABLE commenti (
     FOREIGN KEY (id_utente) REFERENCES utenti(id) ON DELETE CASCADE
 );
 
+# Tabella media nei commenti dei post
 CREATE TABLE media_commenti (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_commento INT NOT NULL,
@@ -78,6 +79,7 @@ CREATE TABLE media_commenti (
     FOREIGN KEY (id_commento) REFERENCES commenti(id) ON DELETE CASCADE
 );
 
+# Tabella Likes
 CREATE TABLE likes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_post INT NOT NULL,
@@ -90,8 +92,8 @@ CREATE TABLE likes (
     FOREIGN KEY (id_utente) REFERENCES utenti(id) ON DELETE CASCADE
 );
 
-
-CREATE TABLE messaggi (
+# Tabella Chat
+CREATE TABLE chat (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_mittente INT NOT NULL,
     id_destinatario INT NOT NULL,
@@ -102,7 +104,8 @@ CREATE TABLE messaggi (
     FOREIGN KEY (id_destinatario) REFERENCES utenti(id) ON DELETE CASCADE
 );
 
-CREATE TABLE media_messaggi (
+# Tabella media nella chat
+CREATE TABLE media_chat (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_messaggio INT NOT NULL,
     tipo ENUM('immagine','video'),
