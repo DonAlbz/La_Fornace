@@ -1,4 +1,4 @@
-# TOPING
+# La Fornace
 Progetto per CLIL di GPOI
 System Requirements
     • XAMPP >= 8.0 (Apache + PHP 8.x + MySQL 8.x)
@@ -8,18 +8,18 @@ System Requirements
 File Structure
 After extracting the archive, the folder structure should be:
 la_fornace/
-├── index.php                 ← Pagina principale
+├── index.php                
 ├── css/
-│   └── style.css             ← Tutti gli stili
+│   └── style.css            
 ├── js/
-│   └── main.js               ← Animazioni, carrello, AJAX
+│   └── main.js               
 ├── php/
-│   ├── config.php            ← Connessione PDO al database
-│   ├── ordine.php            ← Endpoint ricezione ordini
-│   └── admin.php             ← Pannello amministratore
+│   ├── config.php           
+│   ├── ordine.php            
+│   └── admin.php             
 └── sql/
-    └── la_fornace.sql        ← Script creazione DB
-
+    └── la_fornace.sql   
+    
 Step 1 — Place the files
  • Start XAMPP Control Panel → Start Apache and MySQL
 • Copy the 'la_fornace' folder to: C:xampphtdocs (Windows) 
